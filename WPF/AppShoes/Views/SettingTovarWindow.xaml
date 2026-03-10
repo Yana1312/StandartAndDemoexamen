@@ -1,0 +1,76 @@
+﻿<Window x:Class="AppShoes.Views.SettingTovarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppShoes.Views"
+        mc:Ignorable="d"
+        Title="Настройка товаров" Height="450" Width="800" Icon="/Resources/Icon.ico" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#7FFF00">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="\Resources\Icon.png"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Text="ООО обувь" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3"/>
+            <Button Content="Назад" x:Name="ExitBtn" Grid.Column="2" Margin="20" Style="{StaticResource ButtonStyle}" Click="ExitBtn_Click"/>
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="FilterPanel" Margin="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="10">
+                <TextBlock Text="Артикул" Style="{StaticResource TextBlockStyle}" />
+                <TextBox x:Name="ArticulTbox" Text="{Binding TovarArticul, FallbackValue='Генерация автоматическая'}" IsReadOnly="True" IsEnabled="False" Style="{StaticResource TextBoxStyle}"/>
+
+                <TextBlock Text="Название" Style="{StaticResource TextBlockStyle}" />
+                <TextBox x:Name="TitleTbox" Text="{Binding TovarTitle}" Style="{StaticResource TextBoxStyle}" MaxLength="45"/>
+
+                <TextBlock Text="Единица измерения" Style="{StaticResource TextBlockStyle}" />
+                <TextBox x:Name="UnitTbox" Text="шт." IsReadOnly="True" IsEnabled="False" Style="{StaticResource TextBoxStyle}" MaxLength="3"/>
+
+                <TextBlock Text="Цена" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox x:Name="PriceTbox" Text="{Binding TovarCost}" Style="{StaticResource TextBoxStyle}" MaxLength="6" PreviewTextInput="PriceTbox_PreviewTextInput"/>
+
+                <TextBlock Text="Поставщик" Style="{StaticResource TextBlockStyle}" />
+                <ComboBox x:Name="SupplierCb" SelectedValue="{Binding TovarSupplier}"/>
+
+                <TextBlock Text="Производитель" Style="{StaticResource TextBlockStyle}" />
+                <ComboBox x:Name="ManufacturCb" SelectedValue="{Binding TovarManufactor}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="Категория" Style="{StaticResource TextBlockStyle}" />
+                <ComboBox x:Name="CategoryCb" SelectedValue="{Binding TovarCategory}"/>
+
+                <TextBlock Text="Скидка" Style="{StaticResource TextBlockStyle}" />
+                <TextBox x:Name="SaleTbox" Text="{Binding TovarSale}" PreviewTextInput="SaleTbox_PreviewTextInput" MaxLength="3" Style="{StaticResource TextBoxStyle}"/>
+
+                <TextBlock Text="Количество" Style="{StaticResource TextBlockStyle}" />
+                <TextBox x:Name="CountTbox" Text="{Binding TovarCount}" PreviewTextInput="SaleTbox_PreviewTextInput" MaxLength="6" Style="{StaticResource TextBoxStyle}"/>
+
+                <TextBlock Text="Описание" Style="{StaticResource TextBlockStyle}" />
+                <TextBox x:Name="DescriptionTbox" Text="{Binding TovarDescription}" MaxLength="255"
+                         Style="{StaticResource TextBoxStyle}" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                <TextBlock Text="Фото товара" Style="{StaticResource TextBlockStyle}" Margin="0 5 0 0"/>
+                <Border BorderBrush="Gray" BorderThickness="1" Height="100" Margin="0 5">
+                    <Image x:Name="TovarImg" Stretch="Uniform" Source="{Binding FullPath, UpdateSourceTrigger=PropertyChanged, TargetNullValue='/Resources/picture.png'}"/>
+                </Border>
+                <Button Content="Выбрать изображение" Click="SelectPhotoBtn_Click" Style="{StaticResource ButtonStyle}" Margin="0 5"/>
+
+                <Button Content="Сохранить" x:Name="SaveBtn" Click="SaveBtn_Click" Margin="0 15 0 0" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>

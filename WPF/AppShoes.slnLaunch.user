@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Новый профиль",
+    "Projects": [
+      {
+        "Path": "AppShoes\\AppShoes.csproj",
+        "Action": "Start",
+        "DebugTarget": "AppShoes"
+      },
+      {
+        "Path": "APIShoes\\APIShoes.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      }
+    ]
+  }
+]

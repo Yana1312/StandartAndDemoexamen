@@ -1,0 +1,87 @@
+﻿<Window x:Class="AppShoes.Views.SettingOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppShoes.Views"
+        mc:Ignorable="d"
+        Title="Настройка заказов" Height="450" Width="800" Icon="/Resources/Icon.ico" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="#7FFF00">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="\Resources\Icon.png"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Text="ООО Обувь" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3"/>
+            <Button Content="Назад" x:Name="ExitBtn" Grid.Column="2" Margin="20" Style="{StaticResource ButtonStyle}" Click="ExitBtn_Click"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Артикул" Style="{StaticResource TextBlockStyle}" />
+            <TextBox x:Name="ArticulTbox" Text="{Binding OrderId, FallbackValue='Генерация автоматическая'}" IsReadOnly="True" IsEnabled="False" Style="{StaticResource TextBoxStyle}"/>
+
+            <TextBlock Text="Статус заказа" Style="{StaticResource TextBlockStyle}" />
+            <ComboBox x:Name="StatusCb" SelectedValue="{Binding OrderStatus}"/>
+            
+            <TextBlock Text="Пункт выдачи" Style="{StaticResource TextBlockStyle}" />
+            <ComboBox x:Name="PickPointCb" 
+                      SelectedValue="{Binding OrderAdress}" 
+                      SelectedValuePath="PickPointId" 
+                      DisplayMemberPath="Adress"/>
+
+            <TextBlock Text="Дата заказа" Style="{StaticResource TextBlockStyle}"/>
+            <DatePicker SelectedDate="{Binding OrderDate}" IsEnabled="False"/>
+
+            <TextBlock Text="Дата доставки заказа" Style="{StaticResource TextBlockStyle}"/>
+            <DatePicker SelectedDate="{Binding OrderDeliveryDate}" DisplayDateStart="{Binding OrderDate}" 
+                                                       DisplayDateEnd="2026-12-31"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Добавьте товары в заказ" Style="{StaticResource TextBlockStyle}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <ComboBox x:Name="TovarsCb" Width="250"/>
+                <Button Content="Добавить" x:Name="AddTovarBtn" Click="AddTovarBtn_Click" Style="{StaticResource ButtonStyle}" Width="100" Margin="10,0"/>
+            </StackPanel>
+
+            <TextBlock Text="Состав заказа:" Style="{StaticResource TextBlockStyle}"/>
+            <DataGrid x:Name="ItemsDg" IsReadOnly="True" ItemsSource="{Binding Items}" 
+              AutoGenerateColumns="False" Height="130" Margin="0,5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" 
+                            Binding="{Binding ItemArticulNavigation.TovarTitle}" 
+                            Width="*"/>
+                    <DataGridTextColumn Header="Артикул" 
+                            Binding="{Binding ItemArticul}" 
+                            Width="100"/>
+                    <DataGridTextColumn Header="Количество" 
+                            Binding="{Binding ItemCount}" 
+                            Width="80"/>
+                    <DataGridTemplateColumn Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Удалить" 
+                            Click="Button_Click"
+                            Tag="{Binding}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Content="Сохранить заказ" x:Name="SaveBtn" Click="SaveBtn_Click" 
+            Style="{StaticResource ButtonStyle}" Margin="0 10"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

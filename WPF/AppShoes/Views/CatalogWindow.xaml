@@ -1,0 +1,62 @@
+﻿<Window x:Class="AppShoes.Views.CatalogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppShoes.Views"
+        mc:Ignorable="d"
+        Title="Каталог товаров" Height="450" Width="800" Icon="/Resources/Icon.ico" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#7FFF00">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="\Resources\Icon.png"/>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Text="ООО Обувь" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="4"/>
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Background="#7FFF00" VerticalAlignment="Top" HorizontalAlignment="Right" Text="{Binding UserFullName, StringFormat='Вы: {0}  ', FallbackValue='Вы вошли как гость  '}" Style="{StaticResource TextBlockStyle}" FontSize="20"/>
+            <Button Content="Выйти" x:Name="ExitBtn" Grid.Column="3" Margin="10 35 10 10" Style="{StaticResource ButtonStyle}" Click="ExitBtn_Click"/>
+            <Button x:Name="AddOrderBtn" Content="Добавить заказ" Margin="5" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="AddOrderBtn_Click" Visibility="Hidden" VerticalAlignment="Bottom"/>
+            <Button x:Name="AddBtn" Content="Добавить товар" Margin="5" Grid.Column="1" Visibility="Hidden" Click="AddBtn_Click" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top"/>
+
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="FilterPanel" Margin="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="SearchTbox" ToolTip="Поиск" Margin="5 0" TextChanged="SearchTbox_TextChanged"  Style="{StaticResource TextBoxStyle}"/>
+            <ComboBox x:Name="SortCb" SelectedIndex="0" Grid.Column="1" Margin="5 0" ToolTip="Сортировка" SelectionChanged="SortCb_SelectionChanged">
+                <ComboBoxItem Content="Без сортировки"/>
+                <ComboBoxItem Content="Количество - по возрастанию"/>
+                <ComboBoxItem Content="Количество - по убыванию"/>
+            </ComboBox>
+            <ComboBox x:Name="SupplierCb" Grid.Column="2" SelectedIndex="0" Margin="5 0" ToolTip="Фильтрация" SelectionChanged="SupplierCb_SelectionChanged"/>
+        </Grid>
+
+        <TextBlock Visibility="Hidden" x:Name="NotTovarsTb" Grid.Row="2" Text="Товары не найдены" Style="{StaticResource TextBlockStyle}"/>
+
+        <ListView HorizontalContentAlignment="Stretch" x:Name="TovarsLv" Grid.Row="2">
+            <ListView.ContextMenu>
+                <ContextMenu x:Name="EditMenu">
+                    <MenuItem x:Name="EditTovarMi" Click="EditTovarMi_Click" Header="Редактировать"/>
+                    <MenuItem x:Name="DeleteTovarMi" Click="DeleteTovarMi_Click" Header="Удалить"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+    </Grid>
+</Window>
